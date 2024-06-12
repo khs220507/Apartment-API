@@ -1,12 +1,12 @@
 import './App.css';
-import MyApi from './MyApi';
+import RealEstateTable from './RealEstateTable';
 
 function App() {
   return (
     <div className="App">
         <header className="App-header">
             <h1>Data from API:</h1>
-            <MyApi/>
+            <RealEstateTable/>
         </header>
     </div>
   );

@@ -2,6 +2,7 @@ package org.realestate.backend;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,7 @@ public class MyController {
     private MyService myService;
 
 
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/callApi")
     public String callApi() {
         String base_url = "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTrade";
