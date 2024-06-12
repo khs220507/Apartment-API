@@ -5,15 +5,18 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import org.json.JSONObject;
+import org.json.XML;
+
+
 @Service
 public class MyService {
-
-
-
 
 
     @Autowired
@@ -52,22 +55,20 @@ public class MyService {
                 builder.append(line);
             }
 
+            String xmlData = builder.toString(); // XML 데이터를 문자열로 가져오는 부분
+
             reader.close();
             connection.disconnect();
 
-            return builder.toString();
-
+            // 웹요청을 통해 받은 XML 데이터를 JSONObject로 변환하는 부분
+            JSONObject jsonObject = XML.toJSONObject(xmlData);
+            System.out.println(jsonObject.toString(4));
+            return jsonObject.toString(); // JSON 문자열 반환
 
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return null; // 예외가 발생한 경우 null 반환
         }
     }
-
-
-
-
-
-
 }
 

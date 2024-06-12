@@ -1,0 +1,40 @@
+import React, { useState, useEffect } from 'react';
+
+function RealEstateTransactions() {
+    const [data, setData] = useState([]);
+    const [ascending, setAscending] = useState(true); // 오름차순 기본값 설정
+
+    useEffect(() => {
+        // API 호출 및 데이터 받아오는 로직
+        fetch('/api/callApi')
+            .then(res => res.json())
+            .then(jsonData => {
+                // 가격에 따라 정렬
+                const sortedData = jsonData.response.body.items.item.sort((a, b) => {
+                    const priceA = parseInt(a.거래금액.replace(/,/g, ''), 10);
+                    const priceB = parseInt(b.거래금액.replace(/,/g, ''), 10);
+                    return ascending ? priceA - priceB : priceB - priceA;
+                });
+                setData(sortedData);
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    }, [ascending]); // ascending 상태 변경 시 다시 호출
+
+    const toggleSortOrder = () => {
+        setAscending(prevAscending => !prevAscending);
+    };
+
+    return (
+        <div>
+            <h1>Real Estate Transactions</h1>
+            <button onClick={toggleSortOrder}>
+                {ascending ? '내림차순' : '오름차순'} 정렬
+            </button>
+            <table>
+                {/* ... 테이블 내용 */}
+            </table>
+        </div>
+    );
+}
+
+export default RealEstateTransactions;
