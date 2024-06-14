@@ -12,7 +12,4 @@ This application allows users to filter and view real estate transactions based 
 
 ## Screenshot
 
-![Uploading image.png…]()
-
-
-![Real Estate Transactions](image.png)
+![KakaoTalk_20240615_062946287](https://github.com/khs220507/Apartment-API/assets/129834692/21b61b36-af2b-4957-98d7-f03033cff226)
