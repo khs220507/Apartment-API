@@ -1,17 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './Home';
-import RealEstateDashboard from './RealEstateDashboard';
+
+import RealEstateTable from './RealEstateTable';
 
 function App() {
     return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/dashboard" element={<RealEstateDashboard />} />
-            </Routes>
-        </Router>
+        <div className="App">
+            <RealEstateTable />
+        </div>
     );
 }
-
 export default App;

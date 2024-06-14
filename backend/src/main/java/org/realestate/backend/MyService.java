@@ -62,7 +62,6 @@ public class MyService {
 
             // 웹요청을 통해 받은 XML 데이터를 JSONObject로 변환하는 부분
             JSONObject jsonObject = XML.toJSONObject(xmlData);
-            System.out.println(jsonObject.toString(4));
             return jsonObject.toString(); // JSON 문자열 반환
 
         } catch (Exception e) {
