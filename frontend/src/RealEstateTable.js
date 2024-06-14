@@ -10,10 +10,6 @@ import {
     Paper,
     Typography,
     Box,
-    MenuItem,
-    Select,
-    FormControl,
-    InputLabel,
     TableSortLabel,
     Slider,
     Button, TextField,
@@ -55,6 +51,8 @@ function RealEstateTable() {
     const [priceRange, setPriceRange] = useState([0, 500000]); // Default price range from 0 to 500 million
     const [areaRange, setAreaRange] = useState([0, 200]); // Default area range from 0 to 200 square meters
     const [dateRange, setDateRange] = useState({ startDate: subMonths(new Date(), 1), endDate: new Date() });
+    const [filteredData, setFilteredData] = useState([]);
+
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -121,24 +119,28 @@ function RealEstateTable() {
 
     const isWithinDateRange = (dateString) => {
         const date = new Date(dateString);
-        return date >= dateRange[0].startDate && date <= dateRange[0].endDate;
+        return date >= dateRange.startDate && date <= dateRange.endDate;
     };
 
-    // Filter the data based on the selected district code and the specified price/area ranges
-    const filteredData = data.filter(item => {
-        const price = parseInt(item.거래금액.replace(/,/g, ''), 10); // in 만원
-        const area = parseFloat(item.전용면적);
-        const dateString = `${item.년}-${item.월}-${item.일}`;
+    const handleSearch = () => {
+        // Filter the data based on the selected district code and the specified price/area ranges
+        const newFilteredData = data.filter(item => {
+            const price = parseInt(item.거래금액.replace(/,/g, ''), 10); // in 만원
+            const area = parseFloat(item.전용면적);
+            const dateString = `${item.년}-${item.월}-${item.일}`;
 
-        const matchesDistrict = selectedDistrictCodes.includes(item.지역코드.toString());
-        const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
-        const matchesArea = area >= areaRange[0] && area <= areaRange[1];
-        const matchesDate = isWithinDateRange(dateString);
+            const matchesDistrict = selectedDistrictCodes.includes(item.지역코드.toString());
+            const matchesPrice = price >= priceRange[0] && price <= priceRange[1];
+            const matchesArea = area >= areaRange[0] && area <= areaRange[1];
+            const matchesDate = isWithinDateRange(dateString);
 
-        return matchesDistrict && matchesPrice && matchesArea && matchesDate;
-    });
+            return matchesDistrict && matchesPrice && matchesArea && matchesDate;
+        });
 
-    console.log('Filtered data:', filteredData);
+        console.log('Filtered data:', newFilteredData);
+        setFilteredData(newFilteredData);
+    };
+
 
     return (
         <Box sx={{ padding: '20px' }}>
@@ -196,6 +198,13 @@ function RealEstateTable() {
                     <Button variant="contained" onClick={() => handleDateRangeChange(6)}>6 Months</Button>
                 </Box>
             </Box>
+            <Button
+                variant="contained"
+                sx={{ backgroundColor: '#6e6e6e', color: '#fff', '&:hover': { backgroundColor: '#5e5e5e' } }}
+                onClick={handleSearch}
+            >
+                Search
+            </Button>
             <TransactionTable data={filteredData} />
         </Box>
     );
